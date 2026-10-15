@@ -1,0 +1,89 @@
+{
+  "selected_model": "lightgbm",
+  "selection_rule": "highest validation AUPRC after sigmoid calibration",
+  "operating_rule": "validation threshold maximizing F2 subject to sensitivity >= 0.80",
+  "target": "label_drop20_nadir90",
+  "target_definition": "baseline SBP drop >=20 mmHg and nadir SBP <90 mmHg",
+  "target_limitation": "BP-only proxy; symptoms and interventions unavailable",
+  "features": [
+    "age_years",
+    "diabetes",
+    "weight_start_kg",
+    "dry_weight_kg",
+    "weight_gain_kg",
+    "body_temperature_c",
+    "baseline_sbp_mmhg",
+    "baseline_dbp_mmhg",
+    "initial_uf_l_h",
+    "initial_uf_ml_kg_h",
+    "initial_blood_flow_ml_min",
+    "initial_dialysate_temperature_c",
+    "initial_conductivity_ms_cm",
+    "prior_session_count",
+    "prior_idh_rate_10",
+    "prior_mean_nadir_sbp_10",
+    "prior_mean_sbp_drop_10",
+    "previous_session_idh",
+    "previous_nadir_sbp_mmhg",
+    "sex"
+  ],
+  "excluded_leakage_fields": [
+    "nadir_sbp_mmhg",
+    "mean_sbp_mmhg",
+    "sbp_drop_mmhg",
+    "mean_uf_l_h",
+    "mean_blood_flow_ml_min",
+    "elapsed_minutes"
+  ],
+  "history_policy": "history features use only chronologically earlier sessions",
+  "candidates": {
+    "logistic-regression": {
+      "validation": {
+        "auroc": 0.87497,
+        "auprc": 0.38733,
+        "brier": 0.04528,
+        "threshold": 0.05684,
+        "sensitivity": 0.8,
+        "specificity": 0.80197,
+        "precision": 0.20671,
+        "negative_predictive_value": 0.98417,
+        "false_alerts_per_100_sessions": 18.603,
+        "prevalence": 0.06059,
+        "sessions": 15761
+      }
+    },
+    "lightgbm": {
+      "validation": {
+        "auroc": 0.88484,
+        "auprc": 0.43367,
+        "brier": 0.04323,
+        "threshold": 0.05881,
+        "sensitivity": 0.80314,
+        "specificity": 0.80434,
+        "precision": 0.20933,
+        "negative_predictive_value": 0.98446,
+        "false_alerts_per_100_sessions": 18.381,
+        "prevalence": 0.06059,
+        "sessions": 15761
+      },
+      "test": {
+        "auroc": 0.8619,
+        "auprc": 0.32852,
+        "brier": 0.04762,
+        "threshold": 0.05881,
+        "sensitivity": 0.83052,
+        "specificity": 0.73876,
+        "precision": 0.17063,
+        "negative_predictive_value": 0.98537,
+        "false_alerts_per_100_sessions": 24.536,
+        "prevalence": 0.06078,
+        "sessions": 20484
+      }
+    }
+  },
+  "data_hashes": {
+    "sessions-train.csv": "96d6011eb048dd20e8d9a2ebf13ff5baabccc8acc2c06f8200fca4a8f9b1f535",
+    "sessions-validation.csv": "e7739820d9333fbd2de299627b4ba3b109e2b49102853543e9eb8a0aa3ffcbdc",
+    "sessions-test.csv": "96000bbdf71f75b7d0f790debdbb6b385d1af3792c689c138739662e72a7f252"
+  }
+}

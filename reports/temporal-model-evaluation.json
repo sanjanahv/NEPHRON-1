@@ -1,0 +1,61 @@
+{
+  "selected_model": "temporal-lightgbm",
+  "selection_rule": "highest validation row-level AUPRC after sigmoid calibration",
+  "operating_rule": "lowest session false-alert rate among validation thresholds with sensitivity >=0.80",
+  "target": "first qualifying BP-proxy event 15 to 60 minutes ahead",
+  "leakage_policy": "features stop strictly before the first qualifying event",
+  "candidates": {
+    "temporal-logistic": {
+      "validation": {
+        "row_auroc": 0.90124,
+        "row_auprc": 0.11639,
+        "row_brier": 0.00714,
+        "threshold": 0.005628,
+        "event_sessions": 914,
+        "non_event_sessions": 14806,
+        "detected_event_sessions": 733,
+        "false_alert_sessions": 7206,
+        "premature_alert_sessions": 778,
+        "late_alert_sessions": 368,
+        "session_sensitivity": 0.80197,
+        "false_alerts_per_100_sessions": 45.84,
+        "median_warning_minutes": 49.0,
+        "alerts_per_100_session_hours": 13.8
+      }
+    },
+    "temporal-lightgbm": {
+      "validation": {
+        "row_auroc": 0.93013,
+        "row_auprc": 0.16245,
+        "row_brier": 0.00687,
+        "threshold": 0.008131,
+        "event_sessions": 914,
+        "non_event_sessions": 14806,
+        "detected_event_sessions": 732,
+        "false_alert_sessions": 6106,
+        "premature_alert_sessions": 708,
+        "late_alert_sessions": 304,
+        "session_sensitivity": 0.80088,
+        "false_alerts_per_100_sessions": 38.842,
+        "median_warning_minutes": 49.0,
+        "alerts_per_100_session_hours": 11.886
+      },
+      "test": {
+        "row_auroc": 0.91321,
+        "row_auprc": 0.11033,
+        "row_brier": 0.00677,
+        "threshold": 0.008131,
+        "event_sessions": 1136,
+        "non_event_sessions": 19239,
+        "detected_event_sessions": 851,
+        "false_alert_sessions": 9543,
+        "premature_alert_sessions": 844,
+        "late_alert_sessions": 477,
+        "session_sensitivity": 0.74912,
+        "false_alerts_per_100_sessions": 46.837,
+        "median_warning_minutes": 48.0,
+        "alerts_per_100_session_hours": 14.332
+      }
+    }
+  }
+}

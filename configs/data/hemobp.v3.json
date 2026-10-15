@@ -1,0 +1,33 @@
+{
+  "dataset_id": "hemobp-v3",
+  "title": "HEMOBP",
+  "version": 3,
+  "doi": "10.6084/m9.figshare.6260654.v3",
+  "landing_page": "https://figshare.com/articles/dataset/Hemrec_VIP_csv/6260654/3",
+  "api_record": "https://api.figshare.com/v2/articles/6260654/versions/3",
+  "citation": "chien, chih yi (2018). HEMOBP. figshare. Dataset. https://doi.org/10.6084/m9.figshare.6260654.v3",
+  "license": {
+    "name": "CC BY 4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "files": [
+    {
+      "name": "d1.csv",
+      "url": "https://ndownloader.figshare.com/files/15142151",
+      "bytes": 11130894,
+      "md5": "7db3b48bae2c73e3ecd731dbcd452233"
+    },
+    {
+      "name": "idp.csv",
+      "url": "https://ndownloader.figshare.com/files/15142154",
+      "bytes": 35151,
+      "md5": "31d269f59bf4acc719f392ad9164d08a"
+    },
+    {
+      "name": "vip.csv",
+      "url": "https://ndownloader.figshare.com/files/15142157",
+      "bytes": 262851369,
+      "md5": "ff1589610cf7aa3b3e01ba979b6bdc44"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "idp.csv": {
+    "primary_key": ["pid"],
+    "fields": {
+      "pid": {"type": "string", "role": "source patient identifier"},
+      "gender": {"type": "category", "allowed": ["F", "M"]},
+      "birthday": {"type": "integer", "unit": "calendar year"},
+      "first_dialysis": {"type": "year-month"},
+      "DM": {"type": "binary", "meaning": "diabetes mellitus"}
+    }
+  },
+  "d1.csv": {
+    "join_key": ["pid", "calendar date of keyindate"],
+    "fields": {
+      "pid": {"type": "string"},
+      "keyindate": {"type": "datetime"},
+      "dialysisstart": {"type": "time"},
+      "dialysisend": {"type": "time"},
+      "weightstart": {"type": "float", "unit": "kg"},
+      "weightend": {"type": "float", "unit": "kg"},
+      "dryweight": {"type": "float", "unit": "kg"},
+      "temperature": {"type": "float", "unit": "degrees C"}
+    }
+  },
+  "vip.csv": {
+    "join_key": ["pid", "calendar date of datatime"],
+    "fields": {
+      "pid": {"type": "string"},
+      "datatime": {"type": "datetime"},
+      "measuretime": {"type": "integer", "meaning": "source measurement sequence/time field"},
+      "sbp": {"type": "float", "unit": "mmHg", "accepted_range": [30, 250]},
+      "dbp": {"type": "float", "unit": "mmHg", "accepted_range": [20, 160]},
+      "dia_temp_value": {"type": "float", "unit": "degrees C", "accepted_range": [30, 42]},
+      "conductivity": {"type": "float", "unit": "mS/cm", "accepted_range": [10, 20]},
+      "uf": {"type": "float", "unit": "L/h", "accepted_range": [0, 5]},
+      "blood_flow": {"type": "float", "unit": "mL/min", "accepted_range": [0, 600]},
+      "time": {"type": "float", "unit": "minutes elapsed", "accepted_range": [0, 600]}
+    }
+  },
+  "missing_tokens": ["", "NA", "N/A", "null", "None"]
+}

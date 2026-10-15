@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101513">
+  <title>NADI-HD — Patient-Specific Hemodialysis Rehearsal</title>
+  <meta name="description" content="A clinician-facing hemodialysis digital twin for forecasting instability and comparing safer treatment scenarios.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to session summary</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="NADI-HD home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+        <span>NADI<span>—HD</span></span>
+      </a>
+      <div class="session-context">
+        <span class="status-dot"></span>
+        <span id="api-status">CONNECTING TWIN</span>
+        <b>Patient DT–042</b>
+        <span class="muted">Session 19</span>
+      </div>
+      <nav class="top-actions" aria-label="Application actions">
+        <button class="mode-button" id="role-toggle" type="button" aria-label="Switch clinical role">Nurse view</button>
+        <button class="icon-button" id="theme-toggle" type="button" title="Switch colour theme" aria-label="Switch to light theme">
+          <span aria-hidden="true">☼</span>
+        </button>
+        <button class="icon-button" id="toggle-uncertainty" title="Simulate sensor interruption" aria-label="Simulate sensor interruption">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M7 4v6m10-6v6M5 14h14v6H5z"/></svg>
+        </button>
+        <button class="trace-button" id="open-trace"><span>Decision trace</span><b>6</b></button>
+        <div class="avatar">NS</div>
+      </nav>
+    </header>
+
+    <aside class="rail" aria-label="Primary navigation">
+      <button class="rail-button active" aria-label="Session cockpit" data-view="cockpit"><span class="rail-icon">⌁</span><small>Twin</small></button>
+      <button class="rail-button" aria-label="Patient history" data-view="history"><span class="rail-icon">◴</span><small>History</small></button>
+      <button class="rail-button" aria-label="Multisystem map" data-view="systems"><span class="rail-icon">⌘</span><small>Systems</small></button>
+      <button class="rail-button" aria-label="Validation" data-view="validation"><span class="rail-icon">✓</span><small>Validate</small></button>
+      <div class="rail-spacer"></div>
+      <button class="rail-button" aria-label="Information" id="open-about"><span class="rail-icon">i</span><small>About</small></button>
+    </aside>
+
+    <main id="main-content" tabindex="-1">
+      <section class="hero-row">
+        <div>
+          <div class="eyebrow">LIVE PATIENT TWIN / 13 OCT 2026</div>
+          <h1>Good morning, Dr. Shah.</h1>
+          <p><strong>Review before starting:</strong> the planned session has a narrow modeled stability margin.</p>
+        </div>
+        <div class="twin-health">
+          <div class="health-ring" style="--score: 90"><span>9<small>/10</small></span></div>
+          <div><b>Data completeness</b><span>18 prior sessions available</span></div>
+        </div>
+      </section>
+
+      <section class="cockpit-grid">
+        <aside class="patient-panel panel">
+          <div class="panel-heading"><span>PATIENT CONTEXT</span><button aria-label="More patient details">•••</button></div>
+          <div class="patient-identity">
+            <div class="patient-photo">MK</div>
+            <div><h2>Meera K.</h2><p>58 years · Female</p><span class="patient-id">ABHA •••• 8742</span></div>
+          </div>
+          <div class="patient-vitals">
+            <div><span>Current</span><b>64.8<small> kg</small></b></div>
+            <div><span>Dry weight</span><b>61.5<small> kg</small></b></div>
+            <div><span>Pre-HD BP</span><b>132/78</b></div>
+            <div><span>Target UF</span><b>3.3<small> L</small></b></div>
+          </div>
+          <div class="context-block">
+            <div class="block-label">CONTEXT SIGNALS</div>
+            <div class="signal"><span>Diabetes mellitus</span><b>12 y</b></div>
+            <div class="signal"><span>Prior IDH events</span><b class="warn">5 / 18</b></div>
+            <div class="signal"><span>Haemoglobin</span><b>9.4 g/dL</b></div>
+            <div class="signal"><span>Access</span><b>AV fistula</b></div>
+          </div>
+          <div class="calibration-card">
+            <div class="calibration-orbit"><i></i><i></i><i></i></div>
+            <div><span>TWIN CALIBRATED</span><b>Personal response profile</b><p>UF tolerance · refill response · BP recovery</p></div>
+          </div>
+          <div class="data-quality"><span><i></i> Data quality</span><b id="quality-value">9 / 10 streams</b></div>
+        </aside>
+
+        <section class="timeline-panel panel">
+          <div class="panel-heading timeline-heading">
+            <div><span>PHYSIOLOGICAL PLAYBACK</span><small>Forecast horizon · 4 h</small></div>
+            <div class="legend"><span><i class="line actual"></i>Observed</span><span><i class="line forecast"></i>Forecast</span><span><i class="risk-key"></i>IDH window</span></div>
+          </div>
+          <div class="risk-banner">
+            <div><span>SIMULATED HEMODYNAMIC CAUTION</span><b>Modeled risk window: <strong id="risk-time">47 min</strong></b></div>
+            <div class="risk-score"><span id="risk-score">72</span><small>% risk</small></div>
+          </div>
+          <div class="chart-wrap">
+            <div class="chart-label"><span>SYSTOLIC BP</span><b id="live-bp">118 <small>mmHg</small></b></div>
+            <svg id="bp-chart" viewBox="0 0 760 252" role="img" aria-label="Predicted systolic blood pressure timeline">
+              <defs>
+                <linearGradient id="riskFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e86e52" stop-opacity=".27"/><stop offset="1" stop-color="#e86e52" stop-opacity="0"/></linearGradient>
+                <linearGradient id="confidenceFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#89a9a1" stop-opacity=".22"/><stop offset="1" stop-color="#89a9a1" stop-opacity=".02"/></linearGradient>
+              </defs>
+              <g class="grid-lines"></g>
+              <rect class="risk-zone" x="476" y="20" width="145" height="192" rx="2"/>
+              <path id="confidence-area" class="confidence-area"/>
+              <path id="bp-path" class="bp-path"/>
+              <path id="observed-path" class="observed-path"/>
+              <line id="playhead" class="playhead" x1="203" x2="203" y1="18" y2="216"/>
+              <circle id="playhead-dot" class="playhead-dot" cx="203" cy="80" r="5"/>
+              <g class="axis-labels"><text x="7" y="28">140</text><text x="7" y="91">120</text><text x="7" y="155">100</text><text x="7" y="216">80</text><text x="48" y="244">00:00</text><text x="213" y="244">01:00</text><text x="378" y="244">02:00</text><text x="543" y="244">03:00</text><text x="699" y="244">04:00</text></g>
+            </svg>
+            <div class="playback-controls">
+              <button id="play-button" aria-label="Play simulation"><span>▶</span></button>
+              <input id="time-scrubber" type="range" min="0" max="240" value="54" aria-label="Session time">
+              <span id="time-value">00:54 / 04:00</span>
+            </div>
+          </div>
+          <div class="metric-strip">
+            <div><span>PLASMA VOLUME</span><b id="plasma-value">−4.8%</b><svg viewBox="0 0 100 28"><path d="M0 5 C20 6,32 10,47 13 S72 21,100 24"/></svg></div>
+            <div><span>UF REMOVED</span><b id="uf-removed">0.74 L</b><svg viewBox="0 0 100 28"><path d="M0 26 L100 4"/></svg></div>
+            <div><span>EST. CARDIAC OUTPUT</span><b id="cardiac-output">4.2 L/min</b><svg viewBox="0 0 100 28"><path d="M0 7 C28 6,39 10,57 13 S84 21,100 22"/></svg></div>
+          </div>
+          <div class="why-card">
+            <span class="why-icon">!</span>
+            <div><span>WHY RISK IS RISING</span><p id="risk-explanation">The planned UF rate exceeds Meera's learned tolerance envelope while systolic pressure is falling faster than her 18-session baseline.</p></div>
+            <button id="explain-button">Inspect evidence</button>
+          </div>
+        </section>
+
+        <aside class="lab-panel panel">
+          <div class="panel-heading"><span>PRESCRIPTION LAB</span><em>WHAT-IF</em></div>
+          <div class="control-group">
+            <label for="uf-rate"><span>Ultrafiltration rate</span><output id="uf-output">13.4 <small>mL/kg/h</small></output></label>
+            <input id="uf-rate" type="range" min="6" max="15" value="13.4" step="0.1">
+            <div class="range-labels"><span>6.0</span><span>15.0</span></div>
+          </div>
+          <div class="control-row">
+            <div class="control-group compact"><label for="duration"><span>Duration</span><output id="duration-output">4.0 h</output></label><input id="duration" type="range" min="3" max="5.5" value="4" step="0.25"></div>
+            <div class="control-group compact"><label for="blood-flow"><span>Blood flow</span><output id="blood-output">320</output></label><input id="blood-flow" type="range" min="220" max="420" value="320" step="10"></div>
+          </div>
+          <button class="simulate-button" id="simulate-button"><span>Run parallel futures</span><small>24 scenarios · ~0.8 sec</small></button>
+          <div class="simulation-status" id="simulation-status"><span></span><b>Twin ready</b><small>Last calibration 08:42</small></div>
+          <div class="frontier-heading"><span>SAFETY–CLEARANCE FRONTIER</span><button id="expand-frontier">Expand</button></div>
+          <div class="frontier-chart">
+            <svg viewBox="0 0 300 180" role="img" aria-label="Treatment safety and clearance frontier">
+              <g class="frontier-grid"><path d="M36 15V150H288M36 42H288M36 69H288M36 96H288M36 123H288"/></g>
+              <path class="frontier-line" d="M52 121 C87 103,112 91,141 74 S210 45,270 33"/>
+              <g id="scenario-points"></g>
+              <g class="frontier-labels"><text x="4" y="22">SAFE</text><text x="4" y="148">RISK</text><text x="35" y="172">LOW CLEARANCE</text><text x="219" y="172">ADEQUATE</text></g>
+            </svg>
+          </div>
+          <div class="scenario-list" id="scenario-list"></div>
+        </aside>
+      </section>
+
+      <section class="bottom-grid">
+        <div class="adequacy-card panel">
+          <div class="panel-heading"><span>DIALYZER TWIN</span><em>LIVE ESTIMATE</em></div>
+          <div class="adequacy-content">
+            <div class="dialyzer-visual"><div class="filter"><i></i><i></i><i></i><i></i><i></i></div><span class="flow flow-in">BLOOD IN</span><span class="flow flow-out">BLOOD OUT</span></div>
+            <div class="adequacy-stat"><span>PREDICTED Kt/V</span><b id="ktv-value">1.31</b><small>Target ≥ 1.20</small></div>
+            <div class="adequacy-stat"><span>PREDICTED URR</span><b id="urr-value">68%</b><small>Target ≥ 65%</small></div>
+            <div class="clearance-bars"><div><span>Urea clearance</span><b>214 mL/min</b><i><em style="width:78%"></em></i></div><div><span>Fluid target</span><b id="fluid-target-text">3.3 L / 4 h</b><i><em id="fluid-bar" style="width:91%"></em></i></div></div>
+          </div>
+        </div>
+        <div class="systems-card panel">
+          <div class="panel-heading"><span>MULTISYSTEM HORIZON</span><button class="text-button" id="view-systems">Open map →</button></div>
+          <div class="organ-row">
+            <div class="organ kidney active"><span>Kidney</span><b>ESKD</b><small>twin origin</small></div>
+            <div class="connector"><i></i><em>low EPO</em></div>
+            <div class="organ blood"><span>Blood</span><b>9.4</b><small>Hb g/dL</small></div>
+            <div class="connector"><i></i><em>volume load</em></div>
+            <div class="organ heart"><span>Heart</span><b>+18%</b><small>LVH burden</small></div>
+            <div class="connector"><i></i><em>Ca × P</em></div>
+            <div class="organ bone"><span>Bone</span><b>486</b><small>PTH pg/mL</small></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="decision-drawer" id="decision-drawer" aria-hidden="true">
+    <div class="drawer-header"><div><span>DECISION TRACE</span><h2>How this result was formed</h2></div><button id="close-drawer" aria-label="Close">×</button></div>
+    <div class="trace-summary"><span>TRACE ID</span><b>NT1–DT042–S19</b><em>Simulation only</em></div>
+    <ol class="trace-list">
+      <li class="done"><i>01</i><div><b>Data integrity</b><span>9 of 10 expected streams verified</span></div><small>12 ms</small></li>
+      <li class="done"><i>02</i><div><b>Identity & session match</b><span>Historical records linked to DT–042</span></div><small>8 ms</small></li>
+      <li class="done"><i>03</i><div><b>Twin calibration</b><span>18 prior sessions · fidelity 94%</span></div><small>182 ms</small></li>
+      <li class="done"><i>04</i><div><b>Hemodynamic forecast</b><span>Risk window 02:05–02:32</span></div><small>76 ms</small></li>
+      <li class="done"><i>05</i><div><b>Counterfactual search</b><span>24 futures · 7 rejected by constraints</span></div><small>391 ms</small></li>
+      <li class="done"><i>06</i><div><b>Safety critic</b><span>3 clinician-reviewable options retained</span></div><small>41 ms</small></li>
+    </ol>
+    <div class="evidence-section"><span>TOP CONTRIBUTING SIGNALS</span><div class="evidence-bar"><label>UF rate above learned tolerance <b>+0.31</b></label><i><em style="width:88%"></em></i></div><div class="evidence-bar"><label>Prior 10-session nadir SBP <b>+0.24</b></label><i><em style="width:72%"></em></i></div><div class="evidence-bar"><label>Interdialytic weight gain <b>+0.19</b></label><i><em style="width:58%"></em></i></div></div>
+    <div class="safety-note"><b>Clinical decision support only</b><p>NADI-HD presents simulated alternatives for clinician review. It does not change machine settings or replace clinical judgment.</p></div>
+  </aside>
+
+  <div class="modal" id="modal" aria-hidden="true"><div class="modal-card"><button class="modal-close" id="modal-close">×</button><div id="modal-content"></div></div></div>
+  <div class="toast" id="toast"><span></span><div><b></b><small></small></div></div>
+  <script src="./app.js"></script>
+</body>
+</html>
