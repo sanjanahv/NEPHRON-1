@@ -65,6 +65,7 @@ uv run pytest
 
 ## Documentation
 
+- [Start here for coding agents and future work](AGENTS.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Data strategy](docs/DATA.md)
 - [Roadmap](docs/ROADMAP.md)
